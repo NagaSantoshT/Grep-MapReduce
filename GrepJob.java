@@ -32,29 +32,29 @@ public class GrepJob implements Tool
 	public int run(String[] args) throws Exception 
 	{
 		// TODO Auto-generated method stub
-		Job wordCountJob = new Job(getConf());
-		wordCountJob.setJobName("Grep Job");
-		wordCountJob.setJarByClass(this.getClass());
+		Job grepJob = new Job(getConf());
+		grepJob.setJobName("Grep Job");
+		grepJob.setJarByClass(this.getClass());
 		
-		wordCountJob.setMapperClass(GrepMapper.class);
-		wordCountJob.setMapOutputKeyClass(Text.class);
-		wordCountJob.setMapOutputValueClass(NullWritable.class);
+		grepJob.setMapperClass(GrepMapper.class);
+		grepJob.setMapOutputKeyClass(Text.class);
+		grepJob.setMapOutputValueClass(NullWritable.class);
 		
-		wordCountJob.setNumReduceTasks(0);
+		grepJob.setNumReduceTasks(0);
 		
-		wordCountJob.setOutputKeyClass(Text.class);
-		wordCountJob.setOutputValueClass(NullWritable.class);
+		grepJob.setOutputKeyClass(Text.class);
+		grepJob.setOutputValueClass(NullWritable.class);
 		
-		wordCountJob.setInputFormatClass(TextInputFormat.class);
-		wordCountJob.setOutputFormatClass(TextOutputFormat.class);
+		grepJob.setInputFormatClass(TextInputFormat.class);
+		grepJob.setOutputFormatClass(TextOutputFormat.class);
 		
-		FileInputFormat.addInputPath(wordCountJob, new Path(args[0]));
-		FileOutputFormat.setOutputPath(wordCountJob, new Path(args[1]));
+		FileInputFormat.addInputPath(grepJob, new Path(args[0]));
+		FileOutputFormat.setOutputPath(grepJob, new Path(args[1]));
 		
 		Path outputPath = new Path(args[1]);
 		outputPath.getFileSystem(conf).delete(outputPath, true);
 		
-		return wordCountJob.waitForCompletion(true) ? 0 : -1;
+		return grepJob.waitForCompletion(true) ? 0 : -1;
 	}
 	
 	public static void main(String[] args) throws Exception 
